@@ -27,7 +27,14 @@ app.get('/api/menus/a', (req, res) => {
 			return urlA
 		})
 		.then((urlA) => {
-			res.send(`<a>${urlA}</a>`)
+			return scrapeMenu(urlA)
+
+
+			// res.send(`<a>${urlA}</a>`)
+		})
+		.then(price => {
+
+			res.send(price)
 		})
 		.catch(() => {
 			res.send(`something went wrong...`)
@@ -36,7 +43,16 @@ app.get('/api/menus/a', (req, res) => {
 
 const scrapeMenu = url => {
 	return new Promise((res, rej) => {
+		const options = {
+			method: 'GET',
+			uri: url,
+			transform: body => cheerio.load(body)
+		}
 
+		request(options)
+			.then($ => {
+				res($('p.price bdi').text())
+			})
 	})
 }
 
