@@ -2,6 +2,11 @@
 	text-align: center;
 }
 
+#wrapper {
+	max-width: 800px;
+	margin: auto;
+}
+
 .App-header {
 	min-height: 10vh;
 	display: flex;
@@ -10,7 +15,7 @@
 	color: white;
 }
 
-.App-header div{
+.App-header div {
 	margin-left: 20px;
 	margin-right: 20px;
 }
@@ -23,11 +28,24 @@
 	margin-bottom: 20px;
 }
 
-#buttons{
+#buttons {
 	display: flex;
 	justify-content: space-evenly;
 }
 
-#price{
+button {
+	font-family: "Roboto", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 14px 100px;
+	text-transform: uppercase;
+	color: #ffffff;
+	background: #c10a28;
+	border: none;
+	border-radius: 100px;
+	-webkit-border-radius: 100px;
+}
+
+#price {
 	color: red;
 }
