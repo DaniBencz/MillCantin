@@ -3,9 +3,14 @@ import github from './github.png'
 import logo from './logo1-100.png'
 import './App.css'
 
-function App() {
+const App = () => {
 	const getMenu = (letter: string) => {
-		console.log(letter)
+		// fetch(`${window.location.origin}/api/menus/${letter}`)
+		fetch(`http://localhost:4000/api/menus/${letter}`)
+			.then(response => response.json())
+			.then(resp => {
+				console.log(resp)
+			})
 	}
 
 	return (
@@ -19,15 +24,19 @@ function App() {
 				<img alt="gitHub repo" src={logo} width="60" height="60"></img>
 			</header>
 			<div id="welcome">
-				<h2>MillCantin totally fake clone site</h2>
+				<h2>Mill Cantin totally fake clone site</h2>
 				<h3>which menu are you interested in?</h3>
 			</div>
 			<div id="buttons">
-				<button onClick={() => getMenu('A')}>Menu A</button>
-				<button onClick={() => getMenu('B')}>Menu B</button>
+				<button onClick={() => getMenu('a')}>Menu A</button>
+				<button onClick={() => getMenu('b')}>Menu B</button>
 			</div>
 		</div>
 	)
+}
+
+const Display = () => {
+
 }
 
 export default App
