@@ -5,11 +5,11 @@ import loader from './loader.gif'
 import './App.css'
 
 const App = () => {
-	const [menuDetails, setDetails] = useState(0)
-	const [loading, setLoading] = useState(0)
+	const [renderDetails, setDetails] = useState(0)
+	const [renderLoading, setLoading] = useState(0)
 	const [connectionError, setError] = useState(0)
 
-	const getMenu = (letter: string) => {
+	const fetchMenu = (letter: string) => {
 		setDetails(0)
 		setLoading(1)
 		setError(0)
@@ -46,18 +46,18 @@ const App = () => {
 					<h3>Which menu are you interested in?</h3>
 				</div>
 				<div id="buttons">
-					<button onClick={() => getMenu('a')}>Menu A</button>
-					<button onClick={() => getMenu('b')}>Menu B</button>
+					<button onClick={() => fetchMenu('a')}>Menu A</button>
+					<button onClick={() => fetchMenu('b')}>Menu B</button>
 				</div>
-				{loading ? <div id="loader"><img alt="loader" src={loader} width="150" height="150"></img></div> : null}
-				{menuDetails ? <Display details={menuDetails}></Display> : null}
+				{renderLoading ? <div id="loader"><img alt="loader" src={loader} width="150" height="150"></img></div> : null}
+				{renderDetails ? <Display details={renderDetails}></Display> : null}
 				{connectionError ? <h2>Something went wrong...</h2> : null}
 			</div>
 		</div>
 	)
 }
 
-const getToday = () => {
+const getTodaysDate = () => {
 	let today = new Date()
 	let dd = String(today.getDate()).padStart(2, '0')
 	let mm = String(today.getMonth() + 1).padStart(2, '0')
@@ -67,7 +67,7 @@ const getToday = () => {
 
 const Display = ({ details }: any) => {
 	const { price, soup, soup_allergenes, main, main_allergenes, letter } = details
-	const today: string = getToday()
+	const today: string = getTodaysDate()
 
 	return (
 		<div id="display">

@@ -24,7 +24,6 @@
 	padding: 10px;
 	background-color: black;
 	color: white;
-	/* margin-top: 20px; */
 	margin-bottom: 20px;
 }
 
@@ -46,7 +45,7 @@ button {
 	-webkit-border-radius: 100px;
 }
 
-#letter{
+#letter {
 	margin-bottom: 5px;
 }
 
