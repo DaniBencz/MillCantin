@@ -14,8 +14,8 @@ const App = () => {
 		setLoading(1)
 		setError(0)
 
-		// fetch(`${window.location.origin}/api/menus/${letter}`)
-		fetch(`http://localhost:4000/api/menus/${letter}`)
+		fetch(`${window.location.origin}/api/menus/${letter}`)
+		// fetch(`http://localhost:4000/api/menus/${letter}`)
 			.then(response => response.json())
 			.then(resp => {
 				setDetails(resp)
