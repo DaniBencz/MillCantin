@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 4000
-const { getMenuPage, scrapeMenuPage } = require('./services')
+const { getMenuDetails } = require('./services')
 
 app.get('/', (req, res) => {
 	console.log("endpoint hit")
@@ -11,22 +11,25 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/menus/a', (req, res) => {
-	console.log("endpoint menus/a hit")
+	console.log("'api/menus/a' hit")
 
-	getMenuPage("A")
-		.then((url) => scrapeMenuPage(url))
-		.then(menuDetails => {
-			menuDetails.letter = 'A'
-			res.send(menuDetails)
-		})
-		.catch(() => {
+	getMenuDetails("A")
+		.then(menuDetails => res.send(menuDetails))
+		.catch((err) => {
+			console.log(err)
 			res.send(`something went wrong...`)
 		})
 })
 
-app.get('/pi/menus/b', (req, res) => {
-	console.log("endpoint menus/b hit")
-	res.send('B menu')
+app.get('/api/menus/b', (req, res) => {
+	console.log("'api/menus/b' hit")
+	
+	getMenuDetails("B")
+	.then(menuDetails => res.send(menuDetails))
+	.catch((err) => {
+		console.log(err)
+		res.send(`something went wrong...`)
+	})
 })
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`))

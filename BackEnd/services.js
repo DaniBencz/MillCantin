@@ -39,12 +39,22 @@ const scrapeMenuPage = url => {
 					main: $('.woocommerce-product-details__short-description p:nth-child(4)').text().replace('Main course: ', ''),
 					// main_allergenes: $('.woocommerce-product-details__short-description p:nth-child(5)').text().replace('Soup: ', ''),
 				}
-
 				res(details)
 			})
 	})
 }
 
+const getMenuDetails = (menuLetter) =>{
+	return new Promise((res, rej) => {
+		getMenuPage(menuLetter)
+		.then((url) => scrapeMenuPage(url))
+		.then(menuDetails => {
+			menuDetails.letter = menuLetter
+			res(menuDetails)
+		})
+	})
+}
+
 module.exports = {
-	getMenuPage, scrapeMenuPage
+	getMenuDetails
 }
