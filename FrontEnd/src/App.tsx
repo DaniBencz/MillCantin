@@ -4,12 +4,14 @@ import logo from './logo1-100.png'
 import './App.css'
 
 const App = () => {
+	const [menuDetails, setDetails] = useState(false)
+
 	const getMenu = (letter: string) => {
 		// fetch(`${window.location.origin}/api/menus/${letter}`)
 		fetch(`http://localhost:4000/api/menus/${letter}`)
 			.then(response => response.json())
 			.then(resp => {
-				console.log(resp)
+				setDetails(resp)
 			})
 	}
 
@@ -31,12 +33,26 @@ const App = () => {
 				<button onClick={() => getMenu('a')}>Menu A</button>
 				<button onClick={() => getMenu('b')}>Menu B</button>
 			</div>
+			{menuDetails ? <Display details={menuDetails}></Display> : null}
 		</div>
 	)
 }
 
-const Display = () => {
-
+const Display = ({ details }: any) => {
+	console.log(details)
+	const { price, soup, soup_allergenes, main, main_allergenes, letter } = details
+	return (
+		<div id="display">
+			<h2>{`Menu ${details.letter}`}</h2>
+			<h2 id="price">{price}</h2>
+			<p>{`Soup: ${soup}`}</p>
+			<p>
+				{soup_allergenes.map((el: string, i:number) => {
+					return <img src={el} key={i.toString()}></img>
+				})}
+			</p>
+		</div>
+	)
 }
 
 export default App
