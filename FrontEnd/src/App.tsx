@@ -23,7 +23,9 @@ const App = () => {
 						<img alt="gitHub repo" src={github} width="60" height="60"></img>
 					</a>
 				</div>
-				<img alt="gitHub repo" src={logo} width="60" height="60"></img>
+				<div>
+					<img alt="Mill Cantin logo" src={logo} width="60" height="60"></img>
+				</div>
 			</header>
 			<div id="welcome">
 				<h2>Mill Cantin totally fake clone site</h2>
@@ -39,16 +41,21 @@ const App = () => {
 }
 
 const Display = ({ details }: any) => {
-	console.log(details)
 	const { price, soup, soup_allergenes, main, main_allergenes, letter } = details
 	return (
 		<div id="display">
-			<h2>{`Menu ${details.letter}`}</h2>
+			<h2>{`Menu ${letter}`}</h2>
 			<h2 id="price">{price}</h2>
 			<p>{`Soup: ${soup}`}</p>
 			<p>
-				{soup_allergenes.map((el: string, i:number) => {
-					return <img src={el} key={i.toString()}></img>
+				{soup_allergenes.map((el: string, i: number) => {
+					return <img alt="soup allergenes" src={el} key={i.toString()}></img>
+				})}
+			</p>
+			<p>{`Main: ${main}`}</p>
+			<p>
+				{main_allergenes.map((el: string, i: number) => {
+					return <img alt="main allergenes" src={el} key={i.toString()}></img>
 				})}
 			</p>
 		</div>
