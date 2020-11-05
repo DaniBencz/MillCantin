@@ -27,11 +27,11 @@ app.get('/api/menus/b', (req, res) => {
 	getMenuDetails("B")
 		.then(menuDetails => {
 			console.log('sending response')
-			res.send(menuDetails)
+			res.status(200).json(menuDetails)
 		})
 		.catch((err) => {
 			console.log(err)
-			res.send(`something went wrong...`)
+			res.status(500).send(`something went wrong...`)
 		})
 })
 

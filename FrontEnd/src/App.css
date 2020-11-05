@@ -46,6 +46,10 @@ button {
 	-webkit-border-radius: 100px;
 }
 
+#letter{
+	margin-bottom: 5px;
+}
+
 #price {
 	color: red;
 }

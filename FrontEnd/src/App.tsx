@@ -7,10 +7,13 @@ import './App.css'
 const App = () => {
 	const [menuDetails, setDetails] = useState(0)
 	const [loading, setLoading] = useState(0)
+	const [connectionError, setError] = useState(0)
 
 	const getMenu = (letter: string) => {
-		setLoading(1)
 		setDetails(0)
+		setLoading(1)
+		setError(0)
+
 		// fetch(`${window.location.origin}/api/menus/${letter}`)
 		fetch(`http://localhost:4000/api/menus/${letter}`)
 			.then(response => response.json())
@@ -21,6 +24,7 @@ const App = () => {
 			.catch(() => {
 				setDetails(0)
 				setLoading(0)
+				setError(1)
 			})
 	}
 
@@ -39,7 +43,7 @@ const App = () => {
 				</header>
 				<div id="welcome">
 					<h2>Mill Cantin totally fake clone site</h2>
-					<h3>which menu are you interested in?</h3>
+					<h3>Which menu are you interested in?</h3>
 				</div>
 				<div id="buttons">
 					<button onClick={() => getMenu('a')}>Menu A</button>
@@ -47,16 +51,28 @@ const App = () => {
 				</div>
 				{loading ? <div id="loader"><img alt="loader" src={loader} width="150" height="150"></img></div> : null}
 				{menuDetails ? <Display details={menuDetails}></Display> : null}
+				{connectionError ? <h2>Something went wrong...</h2> : null}
 			</div>
 		</div>
 	)
 }
 
+const getToday = () => {
+	let today = new Date()
+	let dd = String(today.getDate()).padStart(2, '0')
+	let mm = String(today.getMonth() + 1).padStart(2, '0')
+	let yyyy = today.getFullYear()
+	return `${mm}/${dd}/${yyyy}`
+}
+
 const Display = ({ details }: any) => {
 	const { price, soup, soup_allergenes, main, main_allergenes, letter } = details
+	const today: string = getToday()
+
 	return (
 		<div id="display">
-			<h2>{`Menu ${letter}`}</h2>
+			<h2 id="letter">{`Menu ${letter}`}</h2>
+			<span>{`on ${today}`}</span>
 			<h2 id="price">{price}</h2>
 			<p>{`Soup: ${soup}`}</p>
 			<p>
@@ -67,7 +83,7 @@ const Display = ({ details }: any) => {
 			<p>{`Main: ${main}`}</p>
 			<p>
 				{main_allergenes.map((el: string, i: number) => {
-					return <img alt="main allergenes" src={el} key={i.toString()}></img>
+					return <img alt="main allergenes" src={el} key={i}></img>
 				})}
 			</p>
 		</div>
