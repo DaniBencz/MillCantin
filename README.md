@@ -1,7 +1,7 @@
 # Mill Cantin full-stack exercise
 
 Installation:
-- cloen repo and cd into /BackEnd
+- clone repo and cd into /BackEnd
 - $ npm install
 
 Start:
