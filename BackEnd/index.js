@@ -14,7 +14,10 @@ app.get('/api/menus/a', (req, res) => {
 	console.log("'api/menus/a' hit")
 
 	getMenuDetails("A")
-		.then(menuDetails => res.send(menuDetails))
+		.then(menuDetails =>{
+			console.log('sending response')
+			res.send(menuDetails)
+		})
 		.catch((err) => {
 			console.log(err)
 			res.send(`something went wrong...`)
@@ -25,7 +28,10 @@ app.get('/api/menus/b', (req, res) => {
 	console.log("'api/menus/b' hit")
 	
 	getMenuDetails("B")
-	.then(menuDetails => res.send(menuDetails))
+	.then(menuDetails =>{
+		console.log('sending response')
+		res.send(menuDetails)
+	})
 	.catch((err) => {
 		console.log(err)
 		res.send(`something went wrong...`)

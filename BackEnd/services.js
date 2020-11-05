@@ -21,7 +21,26 @@ const getMenuPage = (menuLetter) => {
 	})
 }
 
-const scrapeMenuPage = url => {
+const getMainDish = ($, menuLetter) => {
+	return new Promise((res, rej) => {
+		let main
+		// since page structure for the two menus are slightly different
+		// it has to be handled
+		if (menuLetter === 'A') {
+			let str = $('.woocommerce-product-details__short-description p:nth-child(4)')
+				.text().replace('Main course: ', '')
+			let indexOfLineBreak = str.indexOf("\n")
+			main = str.substring(indexOfLineBreak + 1)
+		}
+		else {
+			main = $('.woocommerce-product-details__short-description p:nth-child(5)')
+				.text().replace('Main course: ', '')
+		}
+		res({ $, main })
+	})
+}
+
+const scrapeMenuPage = (url, menuLetter) => {
 	console.log("scraping page")
 	return new Promise((res, rej) => {
 		const options = {
@@ -32,11 +51,20 @@ const scrapeMenuPage = url => {
 
 		request(options)
 			.then($ => {
+				return getMainDish($, menuLetter)
+			})
+			.then(({ $, main }) => {
+				let soup_allergenes = []
+				$('.woocommerce-product-details__short-description p:nth-child(3) img').each((i, el) => {
+					soup_allergenes.push(el.attribs.src)
+				})
+
 				const details = {
 					price: $('p.price bdi').text(),
-					soup: $('.woocommerce-product-details__short-description p:nth-child(2)').text().replace('Soup: ', ''),
-					// soup_allergenes: $('.woocommerce-product-details__short-description p:nth-child(3)').text().replace('Soup: ', ''),
-					main: $('.woocommerce-product-details__short-description p:nth-child(4)').text().replace('Main course: ', ''),
+					soup: $('.woocommerce-product-details__short-description p:nth-child(2)')
+						.text().replace('Soup: ', ''),
+					soup_allergenes,
+					main,
 					// main_allergenes: $('.woocommerce-product-details__short-description p:nth-child(5)').text().replace('Soup: ', ''),
 				}
 				res(details)
@@ -44,14 +72,14 @@ const scrapeMenuPage = url => {
 	})
 }
 
-const getMenuDetails = (menuLetter) =>{
+const getMenuDetails = (menuLetter) => {
 	return new Promise((res, rej) => {
 		getMenuPage(menuLetter)
-		.then((url) => scrapeMenuPage(url))
-		.then(menuDetails => {
-			menuDetails.letter = menuLetter
-			res(menuDetails)
-		})
+			.then((url) => scrapeMenuPage(url, menuLetter))
+			.then(menuDetails => {
+				menuDetails.letter = menuLetter
+				res(menuDetails)
+			})
 	})
 }
 
